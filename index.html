@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function() { 
+  $('div.rgb').click(function(event) {  
+    $.ajax({
+      type: 'POST',
+      url: '/cgi-bin/rgb.py',
+      data: {a: event.target.id}
+    });
+  });
+  $('div.pol').click(function(event) {
+    $.ajax({
+      type: 'POST',
+      url: '/cgi-bin/rgb.py',
+      data: {a: "police"}
+    });
+    $.ajax({
+      type: 'POST',
+      url: '/cgi-bin/rgb.py',
+      data: {a: "siren"}
+    });
+  });
+  var num_clicks = 0;
+  $('#rambo').click(function(event) {
+    num_clicks++;
+    if(num_clicks == 3) {
+      var src = $(this).attr("src");
+      if (src=="rambo.gif") {
+        $(this).attr("src", "/downloads/test_answers.gif");
+      }
+      else {
+        $(this).attr("src", "rambo.gif");
+      }
+    }
+    if(num_clicks == 1) setTimeout(function(){ num_clicks=0; }, 1000);
+  });
+});
+</script>
+</head>
+<title>UCT Class 17-012</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="css/css.css">
+<body>
+<div id="wrap">
+	<div id="title" class="rounded">
+		<div id="inner_title">
+		<center>
+		UCT Class 17012
+		</center>
+		</div>
+	</div>
+	<div class="rounded">
+		<center>
+		<a href="downloads/">Download Class Files</a>
+		</center>
+	</div>
+        <div class="rounded">
+		<center>
+		<a href="buzzer/">Gameshow Buzzer</a>
+		</center>  
+        </div>
+	<div class="rounded">
+		<center>
+		<a href="subnetting/">Subnetting Practice</a>
+		</center>
+	</div>
+	<br>
+	<div>
+	<center>
+	<img id="rambo" src="rambo.gif">
+	</center>
+	</div>
+	<center>
+	<div id="wrapper">
+	<div id="red" class="rgb"></div>
+	<div id="green" class="rgb"></div>
+	<div id="blue" class="rgb"></div>
+	<div id="purple" class="rgb"></div>
+	<div id="turquoise" class="rgb"></div>
+	<div id="orange" class="rgb"></div>
+	<div id="rainbow" class="rgb"></div>
+	<div id="police" class="pol"></div>
+        <div id="off" class="rgb"></div>
+	</div>
+	</center>
+</div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var clicks = 0;
+    var nggyu = document.createElement('audio');
+    nggyu.setAttribute('src', 'nggyu.ogg');
+    nggyu.addEventListener('ended', function() {
+        $('#buzzer').css("background-image", "none");
+    }, false);
+    $('#buzzer').click(function(event) {
+        request = $.ajax({
+            type: 'POST',
+            url: '/cgi-bin/buzzer.py',
+            data: {a: event.target.className},
+        });
+        if (this.className != "none") {
+            clicks++;
+        }
+        if (clicks == 5) {
+            $('#buzzer').css("background-image", "url(../downloads/test_answers.gif)");
+            $('#buzzer').css("background-size", "100%");
+            nggyu.play();
+        }
+        if (clicks == 1) {
+            setTimeout(function() { clicks = 0; }, 1000);
+        }
+    });
+    $('#red_team').click(function(event) {
+        $('#buzzer').addClass('red_team');
+        $('#buzzer').removeClass('none');
+        $('#buzzer').removeClass('green_team');
+        $('#buzzer').removeClass('blue_team');
+        $('.choice').hide();
+        $('#select').hide();
+    });
+    $('#green_team').click(function(event) {
+        $('#buzzer').addClass('green_team');
+        $('#buzzer').removeClass('none');
+        $('#buzzer').removeClass('red_team');
+        $('#buzzer').removeClass('blue_team');
+        $('.choice').hide();
+        $('#select').hide();
+    });
+    $('#blue_team').click(function(event) {
+        $('#buzzer').addClass('blue_team');
+        $('#buzzer').removeClass('none');
+        $('#buzzer').removeClass('green_team');
+        $('#buzzer').removeClass('red_team');
+        $('.choice').hide();
+        $('#select').hide();
+    });
+});
+</script>
+<title>Gameshow Buzzer</title>
+<meta name="viewport" content="width=device-width, user-scalable=0;"
+</head>
+<link rel="stylesheet" type="text/css" href="css/css.css">
+<body>
+    <div id="wrap">
+        <audio id="audio">
+            <source src="nggyu.ogg" type="audio/ogg">
+        </audio> 
+        <div id="buzzer" class="none">
+        </div>
+	<br><br>
+	<center>
+        <b>
+        <div id="select">SELECT A TEAM:</div>
+        </b>
+        <br><br>
+	<div id="red_team" class="choice"></div>
+	<div id="green_team" class="choice"></div>
+	<div id="blue_team" class="choice"></div>
+	</center>
+    </div>
+</body>
+</html>
